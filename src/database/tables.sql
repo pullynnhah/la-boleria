@@ -2,23 +2,23 @@ CREATE DATABASE "laBoleria";
 
 CREATE TABLE "flavours" (
   "id" serial PRIMARY KEY,
-  "name" varchar NOT NULL
+  "name" varchar(255) NOT NULL
 );
 
 CREATE TABLE "cakes" (
   "id" serial PRIMARY KEY,
-  "name" varchar NOT NULL UNIQUE,
+  "name" varchar(255) NOT NULL UNIQUE,
   "price" numeric NOT NULL CHECK ("price" > 0),
-  "image" varchar NOT NULL,
+  "image" varchar(255) NOT NULL,
   "description" text,
   "flavourId" int NOT NULL REFERENCES "flavours" ("id")
 );
 
 CREATE TABLE "clients" (
   "id" serial PRIMARY KEY,
-  "name" varchar NOT NULL,
-  "address" varchar NOT NULL,
-  "phone" varchar NOT NULL CHECK (LENGTH("phone") = 10 OR LENGTH("phone") = 11)
+  "name" varchar(255) NOT NULL,
+  "address" varchar(255) NOT NULL,
+  "phone" varchar(11) NOT NULL
 );
 
 CREATE TABLE "orders" (

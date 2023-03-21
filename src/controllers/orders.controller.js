@@ -14,11 +14,13 @@ export const createOrder = async (req, res) => {
 };
 
 export const listOrders = async (req, res) => {
-  // TODO: req.query
+  const { date = null } = req.query;
   try {
-    const { rows: orders } = await getOrders();
-    res.status(StatusCodes.OK).send(orders);
+    const { rows: orders } = await getOrders(date);
+    if (orders.length === 0) res.status(StatusCodes.NOT_FOUND).send(orders);
+    else res.status(StatusCodes.OK).send(orders);
   } catch (error) {
+    console.log(error);
     res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
@@ -26,11 +28,10 @@ export const listOrders = async (req, res) => {
 export const showOrder = async (req, res) => {
   const { id } = req.params;
   try {
-    const { rows: order, rowsCount } = await getOrder(Number(id));
-    if (rowsCount === 1) res.status(StatusCodes.OK).send(order);
+    const { rows: orders, rowsCount } = await getOrder(Number(id));
+    if (rowsCount === 1) res.status(StatusCodes.OK).send(orders[0]);
     else res.sendStatus(StatusCodes.NOT_FOUND);
   } catch (error) {
-    console.log(error);
     res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };

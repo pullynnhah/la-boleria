@@ -11,7 +11,15 @@ const postOrder = (clientId, cakeId, quantity) => {
   );
 };
 
-const getOrders = () => {
+const getOrders = date => {
+  if (date) {
+    return db.query(
+      /*sql*/ `
+      ${ORDERS_QUERY}
+      WHERE o."createdAt"::date = DATE($1)`,
+      [date]
+    );
+  }
   return db.query(`${ORDERS_QUERY};`);
 };
 
@@ -26,7 +34,7 @@ const getOrder = id => {
 };
 
 const ORDERS_QUERY = /*sql*/ `
-SELECT o.id, o."createdAt", o.quantity, o."totalPrice", o."isDelivery", 
+SELECT o.id, o."createdAt", o.quantity, o."totalPrice", o."isDelivered", 
   json_build_object(
     'id', cl.id,
     'name', cl.name, 
@@ -48,4 +56,4 @@ SELECT o.id, o."createdAt", o.quantity, o."totalPrice", o."isDelivery",
   JOIN clients cl ON cl.id = o."clientId"
 `;
 
-export { postOrders, getOrders, getOrder };
+export { postOrder, getOrders, getOrder };
