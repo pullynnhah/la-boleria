@@ -1,6 +1,6 @@
 import db from "../database/db.connection.js";
 
-export const postCake = async (name, price, description, image, flavourId) => {
+const postCake = (name, price, description, image, flavourId) => {
   return db.query(
     /*sql*/ `
   INSERT INTO cakes (name, price, description, image, "flavourId")
@@ -9,3 +9,5 @@ export const postCake = async (name, price, description, image, flavourId) => {
     [name, price, description, image, flavourId, name]
   );
 };
+
+export { postCake };

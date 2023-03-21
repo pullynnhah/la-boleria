@@ -1,6 +1,6 @@
 import db from "../database/db.connection.js";
 
-export const postOrder = async (clientId, cakeId, quantity) => {
+const postOrder = (clientId, cakeId, quantity) => {
   return db.query(
     /*sql*/ `
   INSERT INTO orders ("clientId", "cakeId", "quantity", "totalPrice")
@@ -11,11 +11,11 @@ export const postOrder = async (clientId, cakeId, quantity) => {
   );
 };
 
-export const getOrders = async () => {
+const getOrders = () => {
   return db.query(`${ORDERS_QUERY};`);
 };
 
-export const getOrder = async id => {
+const getOrder = id => {
   return db.query(
     /*sql*/ `
     ${ORDERS_QUERY}
@@ -47,3 +47,5 @@ SELECT o.id, o."createdAt", o.quantity, o."totalPrice",
   JOIN flavours f ON f.id = c."flavourId"
   JOIN clients cl ON cl.id = o."clientId"
 `;
+
+export { postOrders, getOrders, getOrder };

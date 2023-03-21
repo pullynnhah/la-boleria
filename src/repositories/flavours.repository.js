@@ -1,6 +1,6 @@
 import db from "../database/db.connection.js";
 
-export const postFlavour = async name => {
+const postFlavour = name => {
   return db.query(
     /*sql*/ `
   INSERT INTO flavours (name)
@@ -10,6 +10,8 @@ export const postFlavour = async name => {
   );
 };
 
-export const findFlavour = async id => {
+const findFlavour = id => {
   return db.query(/*sql*/ `SELECT * FROM flavours WHERE id = $1`, [id]);
 };
+
+export { postFlavour, findFlavour };
