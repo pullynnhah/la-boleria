@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { postCake } from "../repositories/cakes.repository.js";
 import { findFlavour } from "../repositories/flavours.repository.js";
 
-export const createCake = async (req, res) => {
+const createCake = async (req, res) => {
   const { name, price, description, image, flavourId } = req.body;
   try {
     const data = await findFlavour(flavourId);
@@ -17,3 +17,5 @@ export const createCake = async (req, res) => {
     res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
+
+export { createCake };

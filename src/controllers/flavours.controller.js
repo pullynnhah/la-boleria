@@ -2,7 +2,7 @@ import { StatusCodes } from "http-status-codes";
 
 import { postFlavour } from "../repositories/flavours.repository.js";
 
-export const createFlavour = async (req, res) => {
+const createFlavour = async (req, res) => {
   const { name } = req.body;
   try {
     const { rowCount } = await postFlavour(name);
@@ -13,4 +13,4 @@ export const createFlavour = async (req, res) => {
   }
 };
 
-export default createFlavour;
+export { createFlavour };

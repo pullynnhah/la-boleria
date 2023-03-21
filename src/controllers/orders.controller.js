@@ -2,7 +2,7 @@ import { StatusCodes } from "http-status-codes";
 
 import { postOrder, getOrders, getOrder } from "../repositories/orders.repository.js";
 
-export const createOrder = async (req, res) => {
+const createOrder = async (req, res) => {
   const { clientId, cakeId, quantity } = req.body;
   try {
     const { rowCount } = await postOrder(clientId, cakeId, quantity);
@@ -13,7 +13,7 @@ export const createOrder = async (req, res) => {
   }
 };
 
-export const listOrders = async (req, res) => {
+const listOrders = async (req, res) => {
   const { date = null } = req.query;
   try {
     const { rows: orders } = await getOrders(date);
@@ -25,7 +25,7 @@ export const listOrders = async (req, res) => {
   }
 };
 
-export const showOrder = async (req, res) => {
+const showOrder = async (req, res) => {
   const { id } = req.params;
   try {
     const { rows: orders, rowsCount } = await getOrder(Number(id));
@@ -35,3 +35,5 @@ export const showOrder = async (req, res) => {
     res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
+
+export { createOrder, listOrders, showOrder };
