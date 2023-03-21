@@ -26,7 +26,7 @@ const getOrder = id => {
 };
 
 const ORDERS_QUERY = /*sql*/ `
-SELECT o.id, o."createdAt", o.quantity, o."totalPrice", 
+SELECT o.id, o."createdAt", o.quantity, o."totalPrice", o."isDelivery", 
   json_build_object(
     'id', cl.id,
     'name', cl.name, 
