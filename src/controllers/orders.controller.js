@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 
-import { postOrder, getOrders, getOrder } from "../repositories/orders.repository.js";
+import { postOrder, getOrders, getOrder, patchOrder } from "../repositories/orders.repository.js";
 
 const createOrder = async (req, res) => {
   const { clientId, cakeId, quantity } = req.body;
@@ -28,12 +28,23 @@ const listOrders = async (req, res) => {
 const showOrder = async (req, res) => {
   const { id } = req.params;
   try {
-    const { rows: orders, rowsCount } = await getOrder(Number(id));
-    if (rowsCount === 1) res.status(StatusCodes.OK).send(orders[0]);
+    const { rows: orders, rowCount } = await getOrder(Number(id));
+    if (rowCount === 1) res.status(StatusCodes.OK).send(orders[0]);
     else res.sendStatus(StatusCodes.NOT_FOUND);
   } catch (error) {
     res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 };
 
-export { createOrder, listOrders, showOrder };
+const deliverOrder = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { rowCount } = await patchOrder(Number(id));
+    if (rowCount === 1) res.sendStatus(StatusCodes.NO_CONTENT);
+    else res.sendStatus(StatusCodes.NOT_FOUND);
+  } catch (error) {
+    res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+};
+
+export { createOrder, listOrders, showOrder, deliverOrder };

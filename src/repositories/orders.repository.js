@@ -33,6 +33,16 @@ const getOrder = id => {
   );
 };
 
+const patchOrder = id => {
+  return db.query(
+    /*sql*/ `
+    UPDATE orders
+    SET "isDelivered" = TRUE
+    WHERE id =$1
+    `,
+    [id]
+  );
+};
 const ORDERS_QUERY = /*sql*/ `
 SELECT o.id, o."createdAt", o.quantity, o."totalPrice", o."isDelivered", 
   json_build_object(
@@ -56,4 +66,4 @@ SELECT o.id, o."createdAt", o.quantity, o."totalPrice", o."isDelivered",
   JOIN clients cl ON cl.id = o."clientId"
 `;
 
-export { postOrder, getOrders, getOrder };
+export { postOrder, getOrders, getOrder, patchOrder };
